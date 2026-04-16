@@ -3,23 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cozy Bouncy Ball</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+  <title>Modern Calculator</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="playfield-wrap">
-    <button id="startButton" class="start-button" type="button">Start</button>
-    <canvas id="playfield" aria-label="Bouncy ball animation"></canvas>
+  <main class="app-shell">
+    <section class="calculator" aria-label="Calculator">
+      <header class="window-bar" aria-label="Calculator window controls">
+        <div class="traffic-lights" aria-hidden="true">
+          <span class="light light-close"></span>
+          <span class="light light-minimize"></span>
+          <span class="light light-maximize"></span>
+        </div>
+        <p class="window-title">Calculator</p>
+        <p class="window-mode">Standard</p>
+      </header>
 
-    <!-- Click menu -->
-    <div id="menu" class="ball-menu hidden">
-      <button id="menuHit" class="menu-btn">👊 Hit</button>
-      <button id="menuSpawn" class="menu-btn">✨ Spawn</button>
-    </div>
-  </div>
+      <div class="calculator-layout">
+        <aside class="sidebar" aria-label="Calculator details">
+          <div class="sidebar-scroll">
+            <p class="brand">Pocket Calc</p>
+            <h1 class="sidebar-title">Cozy Desktop Edition</h1>
+            <p class="sidebar-copy">
+              A warm desktop calculator shell with an iOS-inspired glow, plush spacing, and soft sunset buttons.
+            </p>
+            <div class="cozy-card" aria-hidden="true">
+              <p class="cozy-overline">Atmosphere</p>
+              <p class="cozy-quote">Soft light, rounded glass, and a little warmth around every key.</p>
+            </div>
+            <div class="shortcut-panel">
+              <p class="shortcut-title">Keyboard</p>
+              <p class="shortcut-line"><span>Numbers</span><span>0-9</span></p>
+              <p class="shortcut-line"><span>Operators</span><span>+ - * /</span></p>
+              <p class="shortcut-line"><span>Equals</span><span>Enter</span></p>
+              <p class="shortcut-line"><span>Clear</span><span>Esc</span></p>
+            </div>
+            <div class="shortcut-panel">
+              <p class="shortcut-title">Cozy Notes</p>
+              <p class="shortcut-line"><span>Sound</span><span>Soft tap</span></p>
+              <p class="shortcut-line"><span>Style</span><span>Warm glass</span></p>
+              <p class="shortcut-line"><span>Layout</span><span>Desktop wide</span></p>
+              <p class="shortcut-line"><span>Focus</span><span>No page scroll</span></p>
+            </div>
+          </div>
+        </aside>
+
+        <div class="calculator-main">
+          <header class="display-wrap">
+            <p class="display-label" id="displayLabel">Expression</p>
+            <output class="display" id="display" aria-live="polite">0</output>
+          </header>
+
+          <div class="keypad" role="group" aria-label="Calculator buttons">
+            <button class="key key-utility" data-action="clear">AC</button>
+            <button class="key key-utility" data-action="toggle-sign">+/-</button>
+            <button class="key key-utility" data-action="percent">%</button>
+            <button class="key key-operator" data-action="operator" data-value="/">&divide;</button>
+
+            <button class="key key-number" data-action="digit" data-value="7">7</button>
+            <button class="key key-number" data-action="digit" data-value="8">8</button>
+            <button class="key key-number" data-action="digit" data-value="9">9</button>
+            <button class="key key-operator" data-action="operator" data-value="*">&times;</button>
+
+            <button class="key key-number" data-action="digit" data-value="4">4</button>
+            <button class="key key-number" data-action="digit" data-value="5">5</button>
+            <button class="key key-number" data-action="digit" data-value="6">6</button>
+            <button class="key key-operator" data-action="operator" data-value="-">-</button>
+
+            <button class="key key-number" data-action="digit" data-value="1">1</button>
+            <button class="key key-number" data-action="digit" data-value="2">2</button>
+            <button class="key key-number" data-action="digit" data-value="3">3</button>
+            <button class="key key-operator" data-action="operator" data-value="+">+</button>
+
+            <button class="key key-number key-zero" data-action="digit" data-value="0">0</button>
+            <button class="key key-number" data-action="decimal">.</button>
+            <button class="key key-operator key-equals" data-action="equals">=</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
