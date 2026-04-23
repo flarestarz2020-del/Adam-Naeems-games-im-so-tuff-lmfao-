@@ -3,87 +3,1048 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Calculator</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Viljamii Day</title>
+  <style>
+    :root {
+      --bg: #fff7e8;
+      --bg-alt: #ffe0c2;
+      --ink: #1f1730;
+      --accent: #ff7a59;
+      --accent-2: #34c3a5;
+      --accent-3: #ffd84d;
+      --card: rgba(255, 255, 255, 0.72);
+      --shadow: 0 18px 60px rgba(66, 27, 9, 0.16);
+      --grid: rgba(31, 23, 48, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 122, 89, 0.2), transparent 32%),
+        radial-gradient(circle at 85% 15%, rgba(52, 195, 165, 0.22), transparent 25%),
+        linear-gradient(180deg, #fff8ef 0%, #ffe7d3 35%, #fff0db 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 85%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .orbs,
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(6px);
+      opacity: 0.45;
+      animation: floaty linear infinite;
+    }
+
+    .orb:nth-child(1) {
+      width: 210px;
+      height: 210px;
+      left: 6%;
+      top: 8%;
+      background: rgba(255, 122, 89, 0.35);
+      animation-duration: 18s;
+    }
+
+    .orb:nth-child(2) {
+      width: 160px;
+      height: 160px;
+      right: 10%;
+      top: 28%;
+      background: rgba(52, 195, 165, 0.3);
+      animation-duration: 22s;
+    }
+
+    .orb:nth-child(3) {
+      width: 240px;
+      height: 240px;
+      left: 50%;
+      bottom: 10%;
+      background: rgba(255, 216, 77, 0.28);
+      animation-duration: 26s;
+    }
+
+    .confetti span {
+      position: absolute;
+      width: 12px;
+      height: 30px;
+      border-radius: 999px;
+      opacity: 0.8;
+      animation: rain linear infinite;
+    }
+
+    .confetti span:nth-child(1) { left: 8%; background: #ff7a59; animation-duration: 12s; animation-delay: -2s; }
+    .confetti span:nth-child(2) { left: 20%; background: #34c3a5; animation-duration: 15s; animation-delay: -7s; }
+    .confetti span:nth-child(3) { left: 36%; background: #ffd84d; animation-duration: 10s; animation-delay: -5s; }
+    .confetti span:nth-child(4) { left: 55%; background: #1f1730; animation-duration: 16s; animation-delay: -9s; }
+    .confetti span:nth-child(5) { left: 70%; background: #ff9ab6; animation-duration: 11s; animation-delay: -4s; }
+    .confetti span:nth-child(6) { left: 85%; background: #7cc7ff; animation-duration: 14s; animation-delay: -8s; }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: rgba(31, 23, 48, 0.08);
+      z-index: 20;
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      box-shadow: 0 0 18px rgba(255, 122, 89, 0.45);
+      transition: width 0.12s linear;
+    }
+
+    nav {
+      position: sticky;
+      top: 16px;
+      width: min(1100px, calc(100% - 32px));
+      margin: 22px auto 0;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid rgba(31, 23, 48, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 250, 244, 0.78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      z-index: 10;
+    }
+
+    .brand {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: transform 0.28s ease, background 0.28s ease, color 0.28s ease;
+    }
+
+    .nav-links a:hover {
+      transform: translateY(-4px) rotate(-2deg);
+      background: var(--ink);
+      color: #fff7e8;
+    }
+
+    main {
+      width: min(1100px, calc(100% - 32px));
+      margin: 28px auto 80px;
+    }
+
+    section {
+      position: relative;
+      margin: 28px 0;
+      padding: 32px;
+      border-radius: 32px;
+      border: 1px solid rgba(31, 23, 48, 0.12);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+
+    section::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.48), transparent 70%);
+      transform: rotate(12deg);
+      pointer-events: none;
+    }
+
+    .hero {
+      min-height: 86vh;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 216, 77, 0.34);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: wiggle 3.4s ease-in-out infinite;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 0.96;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 11vw, 7.5rem);
+      margin-top: 18px;
+      text-wrap: balance;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      line-height: 1.7;
+      max-width: 58ch;
+      margin: 18px 0 0;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .button,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .button {
+      padding: 14px 22px;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--accent-3), #ffb360);
+      box-shadow: 0 14px 30px rgba(255, 179, 96, 0.36);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 20px 36px rgba(255, 122, 89, 0.3);
+      filter: saturate(1.12);
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(124, 199, 255, 0.72), rgba(255, 255, 255, 0.5)),
+        linear-gradient(135deg, rgba(255, 216, 77, 0.55), rgba(52, 195, 165, 0.44));
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.35s ease;
+    }
+
+    .hero-card:hover {
+      transform: rotateX(6deg) rotateY(-8deg) translateY(-8px);
+    }
+
+    .pixel-sun,
+    .pixel-cloud,
+    .pixel-grass,
+    .pixel-cube {
+      position: absolute;
+      image-rendering: pixelated;
+      box-shadow: 0 0 0 4px rgba(31, 23, 48, 0.08);
+    }
+
+    .pixel-sun {
+      width: 92px;
+      height: 92px;
+      top: 28px;
+      right: 38px;
+      background:
+        linear-gradient(90deg, #ffd84d 50%, #ffbf00 50%);
+      animation: pulse 2.8s ease-in-out infinite;
+    }
+
+    .pixel-cloud {
+      width: 118px;
+      height: 54px;
+      top: 64px;
+      left: 28px;
+      background:
+        linear-gradient(90deg, #ffffff 50%, #e4f5ff 50%);
+      border-radius: 10px;
+      animation: cloudDrift 8s ease-in-out infinite;
+    }
+
+    .pixel-grass {
+      width: 100%;
+      height: 96px;
+      left: 0;
+      bottom: 0;
+      background:
+        linear-gradient(180deg, #57b957 0 30%, #3d8a3d 30% 100%);
+    }
+
+    .pixel-cube {
+      width: 180px;
+      height: 180px;
+      background:
+        linear-gradient(180deg, #8d5a38 0 24%, #6e4427 24% 100%);
+      border: 16px solid #41a942;
+      z-index: 2;
+      animation: bob 3s ease-in-out infinite;
+    }
+
+    .hero-card .bubble {
+      position: absolute;
+      padding: 12px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(31, 23, 48, 0.1);
+      animation: bounceIn 4s ease-in-out infinite;
+    }
+
+    .hero-card .bubble.one { top: 160px; left: 20px; }
+    .hero-card .bubble.two { top: 220px; right: 18px; animation-delay: -1.4s; }
+    .hero-card .bubble.three { bottom: 114px; left: 40px; animation-delay: -2.5s; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .section-head p {
+      max-width: 58ch;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+    }
+
+    .grid.two,
+    .grid.three {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card,
+    .quote,
+    .mc-card,
+    .timeline-item {
+      position: relative;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(31, 23, 48, 0.1);
+      background: rgba(255, 255, 255, 0.72);
+      transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
+    }
+
+    .card:hover,
+    .quote:hover,
+    .mc-card:hover,
+    .timeline-item:hover {
+      transform: translateY(-10px) rotate(-1deg);
+      box-shadow: 0 18px 36px rgba(31, 23, 48, 0.12);
+      border-color: rgba(255, 122, 89, 0.35);
+    }
+
+    .tag {
+      width: fit-content;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+      background: rgba(52, 195, 165, 0.18);
+      font-size: 0.86rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .card h3,
+    .quote h3,
+    .mc-card h3,
+    .timeline-item h3 {
+      font-size: 1.55rem;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    .card p,
+    .quote p,
+    .mc-card p,
+    .timeline-item p,
+    .footer-note p {
+      margin: 0;
+      line-height: 1.72;
+      font-size: 1rem;
+    }
+
+    .slang-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .slang-cloud span {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255, 122, 89, 0.12), rgba(255, 216, 77, 0.35));
+      font-weight: 800;
+      transition: transform 0.25s ease, background 0.25s ease;
+      cursor: default;
+    }
+
+    .slang-cloud span:hover {
+      transform: translateY(-8px) rotate(-4deg) scale(1.08);
+      background: linear-gradient(135deg, rgba(52, 195, 165, 0.25), rgba(124, 199, 255, 0.34));
+    }
+
+    .quote {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 216, 77, 0.22));
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .minecraft-strip {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .mc-zone {
+      position: relative;
+      min-height: 360px;
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, #8be3ff 0 48%, #dffaff 48% 60%, #6dcf69 60% 78%, #6b4a2d 78% 100%);
+      border: 1px solid rgba(31, 23, 48, 0.1);
+    }
+
+    .mc-zone .block {
+      position: absolute;
+      width: 74px;
+      height: 74px;
+      border: 8px solid rgba(0, 0, 0, 0.12);
+      animation: bob 2.8s ease-in-out infinite;
+    }
+
+    .block.one { left: 10%; top: 18%; background: #6d533b; border-top-color: #4eb14d; }
+    .block.two { left: 38%; top: 38%; background: #9c9c9c; border-top-color: #d4d4d4; animation-delay: -1s; }
+    .block.three { right: 14%; top: 22%; background: #8e4f24; border-top-color: #ffb357; animation-delay: -1.8s; }
+    .block.four { right: 22%; bottom: 18%; background: #396dd8; border-top-color: #70f5ff; animation-delay: -2.3s; }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      align-items: start;
+      gap: 18px;
+    }
+
+    .timeline-item .num {
+      width: 84px;
+      height: 84px;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--accent), #ffb360);
+      color: white;
+      font-size: 2rem;
+      font-weight: 900;
+      box-shadow: 0 10px 22px rgba(255, 122, 89, 0.28);
+    }
+
+    .finale {
+      text-align: center;
+      padding: 54px 28px;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.48) 30%, transparent 72%),
+        linear-gradient(135deg, rgba(255, 122, 89, 0.2), rgba(52, 195, 165, 0.18), rgba(255, 216, 77, 0.24));
+    }
+
+    .finale h2 {
+      margin-bottom: 16px;
+    }
+
+    .footer-note {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto 64px;
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(70px) scale(0.98);
+      transition:
+        opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .reveal[data-tilt="left"] {
+      transform: translateX(-70px) scale(0.98);
+    }
+
+    .reveal[data-tilt="right"] {
+      transform: translateX(70px) scale(0.98);
+    }
+
+    .reveal.show[data-tilt="left"],
+    .reveal.show[data-tilt="right"] {
+      transform: translateX(0) scale(1);
+    }
+
+    .parallax {
+      transform: translateY(var(--parallax, 0px));
+      transition: transform 0.12s linear;
+    }
+
+    @keyframes floaty {
+      0% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-26px) translateX(20px); }
+      100% { transform: translateY(0) translateX(0); }
+    }
+
+    @keyframes rain {
+      0% { transform: translateY(-120px) rotate(0deg); opacity: 0; }
+      8% { opacity: 0.85; }
+      100% { transform: translateY(110vh) rotate(180deg); opacity: 0; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes cloudDrift {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(18px); }
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes bounceIn {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-8px) rotate(-2deg); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      75% { transform: rotate(-2deg); }
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        border-radius: 28px;
+      }
+
+      .hero,
+      .minecraft-strip,
+      .grid.two,
+      .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item .num {
+        width: 68px;
+        height: 68px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        position: relative;
+        top: 0;
+        margin-top: 16px;
+        padding: 16px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        width: min(100% - 18px, 1100px);
+      }
+
+      section {
+        padding: 24px 18px;
+        border-radius: 24px;
+      }
+
+      .hero-card {
+        min-height: 340px;
+      }
+
+      h1 {
+        line-height: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-  <main class="app-shell">
-    <section class="calculator" aria-label="Calculator">
-      <header class="window-bar" aria-label="Calculator window controls">
-        <div class="traffic-lights" aria-hidden="true">
-          <span class="light light-close"></span>
-          <span class="light light-minimize"></span>
-          <span class="light light-maximize"></span>
-        </div>
-        <p class="window-title">Calculator</p>
-        <p class="window-mode">Standard</p>
-      </header>
+  <div class="progress-bar"><span id="scrollBar"></span></div>
 
-      <div class="calculator-layout">
-        <aside class="sidebar" aria-label="Calculator details">
-          <div class="sidebar-scroll">
-            <p class="brand">Pocket Calc</p>
-            <h1 class="sidebar-title">Cozy Desktop Edition</h1>
-            <p class="sidebar-copy">
-              A warm desktop calculator shell with an iOS-inspired glow, plush spacing, and soft sunset buttons.
+  <div class="orbs" aria-hidden="true">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <div class="confetti" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <nav>
+    <div class="brand">Viljamii Birthday Mode</div>
+    <div class="nav-links">
+      <a href="#vibe">Vibe</a>
+      <a href="#lore">Lore</a>
+      <a href="#minecraft">Minecraft</a>
+      <a href="#birthday">Bday</a>
+      <a href="#finale">Finale</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero reveal show">
+      <div class="parallax" data-speed="0.12">
+        <span class="eyebrow">quiet voice, loud aura, funny tf</span>
+        <h1>Happy Birthday Viljamii</h1>
+        <p>
+          Today is basically official proof that one of the chillest and funniest people around exists, ikr.
+          Quiet voice? Yeah. Lowkey delivery? Sure. But somehow the jokes still land so hard that people are like
+          "nah wtf" and start laughing anyway. This page is here to say your vibe is elite, your slang game is
+          unreasonably strong, and your whole presence is just chef's kiss fr.
+        </p>
+        <div class="cta-row">
+          <a class="button" href="#birthday">Scroll the birthday arc</a>
+          <a class="button" href="#minecraft">Enter the block zone</a>
+        </div>
+      </div>
+
+      <div class="hero-card parallax" data-speed="-0.1">
+        <div class="pixel-sun"></div>
+        <div class="pixel-cloud"></div>
+        <div class="pixel-cube"></div>
+        <div class="pixel-grass"></div>
+        <div class="bubble one">ikr</div>
+        <div class="bubble two">nah tf</div>
+        <div class="bubble three">villager rizz</div>
+      </div>
+    </section>
+
+    <section id="vibe" class="reveal" data-tilt="left">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 01</span>
+          <h2>The Viljamii Vibe</h2>
+        </div>
+        <p>
+          Some people enter a room loud. Viljamii enters with stealth mode on and still somehow owns the whole moment.
+          That's talent, that's aura, that's low-volume comedy with max impact.
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="card parallax" data-speed="0.08">
+          <h3>Quiet But Deadly</h3>
+          <p>
+            The voice might be calm and chill, but the humor hits like it was waiting in the shadows for the perfect
+            timing. One random line and suddenly everybody is folded. Ik, unfair levels of funny.
+          </p>
+        </article>
+        <article class="card parallax" data-speed="0.13">
+          <h3>Funny For No Reason</h3>
+          <p>
+            Viljamii can say the most normal sentence and still make it sound hilarious. Like bro probably just asks
+            for water and somehow the whole table is giggling. Nah, that kind of power should be studied.
+          </p>
+        </article>
+        <article class="card parallax" data-speed="0.09">
+          <h3>Slang Certified</h3>
+          <p>
+            The vocabulary? Iconic. The casual "wtf", "nah", "ik", "ikr" drops? Always on brand. It is not just speech,
+            it is atmosphere. It is flavor. It is the whole soundtrack of being funny and unbothered.
+          </p>
+        </article>
+      </div>
+      <div class="slang-cloud">
+        <span>ikr</span>
+        <span>ik</span>
+        <span>tf</span>
+        <span>wtf</span>
+        <span>nah</span>
+        <span>bro</span>
+        <span>lowkey</span>
+        <span>fr</span>
+      </div>
+    </section>
+
+    <section id="lore" class="reveal" data-tilt="right">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 02</span>
+          <h2>Lore Drops</h2>
+        </div>
+        <p>
+          This section is for documenting the legendary details, because being funny, chill, and weirdly iconic at the
+          same time deserves an archive.
+        </p>
+      </div>
+      <div class="grid two">
+        <article class="quote">
+          <h3>How it feels talking to Viljamii</h3>
+          <p>
+            At first you're like, "okay, chill guy, nice." Then five minutes later he says one tiny sarcastic thing in
+            the quietest voice ever and you're done for. Immediate laughter, instant respect, zero recovery.
+          </p>
+          <strong>Certified reaction: "nah wtf that was too funny"</strong>
+        </article>
+        <article class="quote">
+          <h3>Why today matters</h3>
+          <p>
+            A birthday is already special, but this one is extra because it celebrates a person who makes regular
+            moments funnier just by existing. That's rare. That's goated. That's exactly why this page had to happen.
+          </p>
+          <strong>Translation: bestie buff activated</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal" data-tilt="left">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 03</span>
+          <h2>Things That Just Fit</h2>
+        </div>
+        <p>
+          If a personality had side quests and bonus stats, these would probably be the ones maxed out right now.
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Stealth Humor</h3>
+          <p>
+            No dramatic setup, no giant speech, just one line out of nowhere and boom. Comedy crit damage. Tf are we
+            even supposed to do against that.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Minecraft Energy</h3>
+          <p>
+            Sometimes the vibe is absolutely "let's hop on Minecraft for a bit" and honestly that feels correct.
+            Cozy blocks, random adventures, and a little chaos? Yeah that tracks.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Unbothered Aura</h3>
+          <p>
+            There is something elite about being funny without begging for attention. Viljamii just exists, drops a
+            line, and lets the room deal with it. Ik, stylish.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="minecraft" class="reveal" data-tilt="right">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 04</span>
+          <h2>Minecraft Side Quest</h2>
+        </div>
+        <p>
+          Because a Viljamii page without at least a little blocky energy would be wrong, and we both know it.
+        </p>
+      </div>
+      <div class="minecraft-strip">
+        <div class="mc-zone parallax" data-speed="0.12">
+          <div class="block one"></div>
+          <div class="block two"></div>
+          <div class="block three"></div>
+          <div class="block four"></div>
+        </div>
+        <div class="grid">
+          <article class="mc-card">
+            <h3>Spawn Point: immaculate</h3>
+            <p>
+              If Viljamii loaded into a Minecraft world, he'd probably build something chill, say one hilarious thing,
+              and then disappear into the distance like some legendary side character. Nah because why is that so real.
             </p>
-            <div class="cozy-card" aria-hidden="true">
-              <p class="cozy-overline">Atmosphere</p>
-              <p class="cozy-quote">Soft light, rounded glass, and a little warmth around every key.</p>
-            </div>
-            <div class="shortcut-panel">
-              <p class="shortcut-title">Keyboard</p>
-              <p class="shortcut-line"><span>Numbers</span><span>0-9</span></p>
-              <p class="shortcut-line"><span>Operators</span><span>+ - * /</span></p>
-              <p class="shortcut-line"><span>Equals</span><span>Enter</span></p>
-              <p class="shortcut-line"><span>Clear</span><span>Esc</span></p>
-            </div>
-            <div class="shortcut-panel">
-              <p class="shortcut-title">Cozy Notes</p>
-              <p class="shortcut-line"><span>Sound</span><span>Soft tap</span></p>
-              <p class="shortcut-line"><span>Style</span><span>Warm glass</span></p>
-              <p class="shortcut-line"><span>Layout</span><span>Desktop wide</span></p>
-              <p class="shortcut-line"><span>Focus</span><span>No page scroll</span></p>
-            </div>
-          </div>
-        </aside>
-
-        <div class="calculator-main">
-          <header class="display-wrap">
-            <p class="display-label" id="displayLabel">Expression</p>
-            <output class="display" id="display" aria-live="polite">0</output>
-          </header>
-
-          <div class="keypad" role="group" aria-label="Calculator buttons">
-            <button class="key key-utility" data-action="clear">AC</button>
-            <button class="key key-utility" data-action="toggle-sign">+/-</button>
-            <button class="key key-utility" data-action="percent">%</button>
-            <button class="key key-operator" data-action="operator" data-value="/">&divide;</button>
-
-            <button class="key key-number" data-action="digit" data-value="7">7</button>
-            <button class="key key-number" data-action="digit" data-value="8">8</button>
-            <button class="key key-number" data-action="digit" data-value="9">9</button>
-            <button class="key key-operator" data-action="operator" data-value="*">&times;</button>
-
-            <button class="key key-number" data-action="digit" data-value="4">4</button>
-            <button class="key key-number" data-action="digit" data-value="5">5</button>
-            <button class="key key-number" data-action="digit" data-value="6">6</button>
-            <button class="key key-operator" data-action="operator" data-value="-">-</button>
-
-            <button class="key key-number" data-action="digit" data-value="1">1</button>
-            <button class="key key-number" data-action="digit" data-value="2">2</button>
-            <button class="key key-number" data-action="digit" data-value="3">3</button>
-            <button class="key key-operator" data-action="operator" data-value="+">+</button>
-
-            <button class="key key-number key-zero" data-action="digit" data-value="0">0</button>
-            <button class="key key-number" data-action="decimal">.</button>
-            <button class="key key-operator key-equals" data-action="equals">=</button>
-          </div>
+          </article>
+          <article class="mc-card">
+            <h3>Inventory Check</h3>
+            <p>
+              Humor: stacked. Slang: stacked. Birthday aura: stacked. Quiet voice: enchanted. Friendship points: full.
+              Creepers? Absolutely not invited today, tf.
+            </p>
+          </article>
+          <article class="mc-card">
+            <h3>Biome Match</h3>
+            <p>
+              Somewhere between cozy plains, funny village chaos, and one random mountain where the sunset actually
+              slaps. That feels like the right map for this whole birthday vibe.
+            </p>
+          </article>
         </div>
+      </div>
+    </section>
+
+    <section id="birthday" class="reveal" data-tilt="left">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 05</span>
+          <h2>Birthday Scroll Arc</h2>
+        </div>
+        <p>
+          Since this is the special day, here is the proper cinematic progression. Yes, it is dramatic. Yes, it is deserved.
+        </p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item">
+          <div class="num">01</div>
+          <div>
+            <h3>Wake Up Legendary</h3>
+            <p>
+              Day starts, birthday buff loads in, and the whole universe quietly agrees that Viljamii deserves a top-tier
+              day. The vibes are already good. The jokes are probably pending.
+            </p>
+          </div>
+        </article>
+        <article class="timeline-item">
+          <div class="num">02</div>
+          <div>
+            <h3>Receive Maximum Appreciation</h3>
+            <p>
+              Messages roll in, people show love, and everybody is basically saying the same thing in different words:
+              you are funny as hell and the squad is happier because you're here. Ikr, easy facts.
+            </p>
+          </div>
+        </article>
+        <article class="timeline-item">
+          <div class="num">03</div>
+          <div>
+            <h3>Drop Casual Joke, Destroy Crowd</h3>
+            <p>
+              Somewhere in the day, a completely unfair line gets delivered in that quiet voice and now everyone's
+              laughing again. As expected. Scripted by destiny at this point.
+            </p>
+          </div>
+        </article>
+        <article class="timeline-item">
+          <div class="num">04</div>
+          <div>
+            <h3>Optional Minecraft Intermission</h3>
+            <p>
+              A little block placing, a little roaming, maybe a tiny bit of nonsense. The perfect side quest if the day
+              needs extra cozy points. Villagers would totally approve, ik.
+            </p>
+          </div>
+        </article>
+        <article class="timeline-item">
+          <div class="num">05</div>
+          <div>
+            <h3>End The Day Feeling Loved</h3>
+            <p>
+              That is the main goal. Full stop. Not just fun, not just funny moments, but that solid feeling of "yeah,
+              people really care about me." Because they do, and this page is proof fr.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reveal" data-tilt="right">
+      <div class="section-head">
+        <div>
+          <span class="tag">Chapter 06</span>
+          <h2>Reasons Viljamii Is Goated</h2>
+        </div>
+        <p>
+          Just a small list. Okay not small. But fair. Because one tiny section was not enough, tf.
+        </p>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>He makes normal moments better</h3>
+          <p>
+            Some people only shine in big moments. Viljamii makes even random conversations feel funnier and warmer.
+            That's a real gift and lowkey one of the coolest things about him.
+          </p>
+        </article>
+        <article class="card">
+          <h3>His humor feels effortless</h3>
+          <p>
+            It never looks forced. It just appears, lands perfectly, and leaves everybody staring like "bro how did you
+            even think of that." Suspicious talent levels tbh.
+          </p>
+        </article>
+        <article class="card">
+          <h3>He has actual chill energy</h3>
+          <p>
+            Not fake chill. Not trying-too-hard chill. Real calm, easy presence. The kind that makes people feel comfy
+            without even noticing why.
+          </p>
+        </article>
+        <article class="card">
+          <h3>He deserves a happy birthday</h3>
+          <p>
+            This one is non-negotiable. Cake, laughs, good vibes, good people, maybe some gaming, zero nonsense. That is
+            the birthday law today, nah exceptions.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="finale" class="finale reveal">
+      <span class="tag">Final Chapter</span>
+      <h2>Viljamii, hope this day feels as fun as you make everybody else's.</h2>
+      <p>
+        Happy birthday to the quiet-voiced comedy menace, the slang machine, the Minecraft side-quest king, and the
+        all-around lovely human. Keep being funny, weird, chill, and completely yourself because that combo is elite.
+        Ikr, this page had one job: make you smile. Mission better be complete.
+      </p>
+      <div class="cta-row" style="justify-content:center;">
+        <a class="button" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Replay the chaos</a>
       </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <div class="footer-note">
+    <p>
+      Built for Viljamii's birthday with maximum playful energy, extra hover nonsense, scroll reveals, and a little
+      blocky love because plain pages are boring and today is not a boring day.
+    </p>
+  </div>
+
+  <script>
+    const reveals = document.querySelectorAll(".reveal");
+    const progress = document.getElementById("scrollBar");
+    const parallaxItems = document.querySelectorAll(".parallax");
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        }
+      });
+    }, {
+      threshold: 0.18
+    });
+
+    reveals.forEach((item) => revealObserver.observe(item));
+
+    const updateScrollEffects = () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+      progress.style.width = percent + "%";
+
+      parallaxItems.forEach((item) => {
+        const speed = Number(item.dataset.speed || 0);
+        const rect = item.getBoundingClientRect();
+        const offset = (window.innerHeight / 2 - rect.top) * speed;
+        item.style.setProperty("--parallax", offset.toFixed(2) + "px");
+      });
+    };
+
+    updateScrollEffects();
+    window.addEventListener("scroll", updateScrollEffects, { passive: true });
+    window.addEventListener("resize", updateScrollEffects);
+  </script>
 </body>
 </html>
