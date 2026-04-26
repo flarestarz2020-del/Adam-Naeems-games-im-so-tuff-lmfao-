@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MOM Finland Services Hub — Housing, Registration, Language Learning, Events, Jobs and Healthcare guidance for Finland." />
+  <title>Services Hub — MOM Finland</title>
+  <link rel="stylesheet" href="../css/hub.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo" aria-label="MOM Finland home">
+          <div class="nav-logo-mark" aria-hidden="true">MF</div>
+          <span class="nav-logo-text">MOM <span>Finland</span></span>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li><a href="../index.html" data-i18n="nav_home">Home</a></li>
+          <li><a href="../index.html#booking" data-i18n="nav_book">Book a Call</a></li>
+          <li><a href="../index.html#footer" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+          <div class="lang-switcher" role="group" aria-label="Language selector">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="fi">FI</button>
+            <button class="lang-btn" data-lang="sv">SV</button>
+          </div>
+          <a href="../index.html#booking" class="btn-nav" data-i18n="nav_book">Book a Call</a>
+        </div>
+
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" role="dialog" aria-label="Mobile navigation">
+      <a href="../index.html" data-i18n="nav_home">Home</a>
+      <a href="../index.html#booking" data-i18n="nav_book">Book a Call</a>
+      <a href="../index.html#footer" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher" role="group">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fi">FI</button>
+        <button class="lang-btn" data-lang="sv">SV</button>
+      </div>
+      <a href="../index.html#booking" class="btn-book-mobile" data-i18n="nav_book">Book a Call</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ══════════════════════════════════════
+         HUB HERO
+    ══════════════════════════════════════ -->
+    <div class="hub-hero">
+      <div class="container">
+        <div class="hub-hero-inner">
+          <span class="overline">Services Hub</span>
+          <h1 data-i18n="hub_title">Services Hub</h1>
+          <p data-i18n="hub_subtitle">Choose a category to explore your options</p>
+
+          <!-- Path filter -->
+          <div class="path-filter" role="group" aria-label="Filter by user path">
+            <button class="path-btn active" data-path="all" aria-pressed="true">
+              🌐 All Services
+            </button>
+            <button class="path-btn" data-path="moving" aria-pressed="false">
+              ✈️ <span data-i18n="persona_moving">Moving to Finland</span>
+            </button>
+            <button class="path-btn" data-path="living" aria-pressed="false">
+              🌲 <span data-i18n="persona_living">Already in Finland</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         QUICK NAV
+    ══════════════════════════════════════ -->
+    <nav class="quick-nav" aria-label="Jump to section">
+      <div class="quick-nav-inner">
+        <button class="quick-nav-btn active" data-target="housing">🏠 <span data-i18n="svc_housing_title">Housing</span></button>
+        <button class="quick-nav-btn" data-target="registration">🪪 <span data-i18n="svc_registration_title">Registration</span></button>
+        <button class="quick-nav-btn" data-target="banking">💳 Banking</button>
+        <button class="quick-nav-btn" data-target="language">🗣️ <span data-i18n="svc_language_title">Language</span></button>
+        <button class="quick-nav-btn" data-target="events">🎉 <span data-i18n="svc_events_title">Events</span></button>
+        <button class="quick-nav-btn" data-target="jobs">💼 <span data-i18n="svc_jobs_title">Jobs</span></button>
+        <button class="quick-nav-btn" data-target="healthcare">🏥 <span data-i18n="svc_healthcare_title">Healthcare</span></button>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════
+         HUB CONTENT
+    ══════════════════════════════════════ -->
+    <div class="hub-content">
+      <div class="container">
+
+        <!-- Back to home -->
+        <a href="../index.html" class="back-btn">
+          <span>←</span>
+          <span data-i18n="back_home">Back to Home</span>
+        </a>
+
+        <!-- ────────────────────────────────
+             1. HOUSING
+        ──────────────────────────────── -->
+        <section class="hub-section" id="housing" data-path="moving" aria-labelledby="housing-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-housing" aria-hidden="true">🏠</div>
+            <div>
+              <h2 id="housing-title">
+                <span data-i18n="housing_title">Housing in Finland</span>
+                <span class="path-tag moving" aria-label="For those moving to Finland">✈️ Moving</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_housing_desc">Navigate Oikotie, Vuokraovi and city housing applications</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Where to search</h4>
+              <p data-i18n="housing_p1">Most rentals are listed on Oikotie and Vuokraovi. Good apartments disappear fast — apply within hours of a listing appearing.</p>
+              <div class="resource-links">
+                <a href="https://oikotie.fi/vuokra-asunnot" target="_blank" rel="noopener" class="resource-link">Oikotie.fi <span class="ext-icon">↗</span></a>
+                <a href="https://vuokraovi.com" target="_blank" rel="noopener" class="resource-link">Vuokraovi.com <span class="ext-icon">↗</span></a>
+              </div>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4 data-i18n="housing_requirements">You'll typically need</h4>
+              <ul>
+                <li data-i18n="housing_r1">Valid ID / passport</li>
+                <li data-i18n="housing_r2">Proof of income or benefits</li>
+                <li data-i18n="housing_r3">Deposit of 1–2 months rent</li>
+                <li>Finnish personal identity code (when available)</li>
+              </ul>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>City-Owned Housing</h4>
+              <p>Apply for city-owned housing for cheaper rent. Helsinki's programme is managed by Helsingin kaupungin asunnot. Expect long queues but significantly lower costs.</p>
+              <div class="resource-links">
+                <a href="https://heka.fi" target="_blank" rel="noopener" class="resource-link">Heka.fi ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box fade-up" data-i18n="housing_tip">
+            💡 Pro Tip: Apply for city-owned housing (Helsinki: Helsingin kaupungin asunnot) for cheaper rent — but expect longer waiting queues.
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             2. REGISTRATION & ID
+        ──────────────────────────────── -->
+        <section class="hub-section" id="registration" data-path="moving" aria-labelledby="reg-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-registration" aria-hidden="true">🪪</div>
+            <div>
+              <h2 id="reg-title">
+                <span data-i18n="reg_title">Registration &amp; ID</span>
+                <span class="path-tag moving" aria-label="For those moving to Finland">✈️ Moving</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_registration_desc">DVV registration, Finnish ID card, bank account setup</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Step-by-Step Process</h4>
+              <ul class="steps-list">
+                <li class="step-item">
+                  <div class="step-num">1</div>
+                  <div class="step-content">
+                    <strong>Visit DVV</strong>
+                    <span data-i18n="reg_step1">Register your address and get a Finnish personal identity code at Digi- ja väestötietovirasto.</span>
+                  </div>
+                </li>
+                <li class="step-item">
+                  <div class="step-num">2</div>
+                  <div class="step-content">
+                    <strong>Get your ID card</strong>
+                    <span data-i18n="reg_step2">Visit the Police of Finland to get your ID card — needed for almost everything.</span>
+                  </div>
+                </li>
+                <li class="step-item">
+                  <div class="step-num">3</div>
+                  <div class="step-content">
+                    <strong>Open a bank account</strong>
+                    <span data-i18n="reg_step3">Open a bank account (Nordea, OP, etc.) to get your Finnish bank ID for online government services.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Official Resources</h4>
+              <p>Book your appointments online in advance to save time.</p>
+              <div class="resource-links">
+                <a href="https://dvv.fi" target="_blank" rel="noopener" class="resource-link">DVV.fi ↗</a>
+                <a href="https://poliisi.fi" target="_blank" rel="noopener" class="resource-link">Poliisi.fi ↗</a>
+                <a href="https://nordea.fi" target="_blank" rel="noopener" class="resource-link">Nordea ↗</a>
+                <a href="https://op.fi" target="_blank" rel="noopener" class="resource-link">OP Ryhmä ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box fade-up">
+            💡 Once you have your bank ID, you can do almost everything online — from signing rental contracts to applying for benefits. This saves enormous amounts of time.
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             3. BANKING & DIGITAL ACCESS
+        ──────────────────────────────── -->
+        <section class="hub-section" id="banking" data-path="moving" aria-labelledby="banking-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-events" aria-hidden="true">💳</div>
+            <div>
+              <h2 id="banking-title">
+                Banking &amp; Digital Access
+                <span class="path-tag moving" aria-label="For those moving to Finland">✈️ Moving</span>
+              </h2>
+              <p class="subtitle">Your bank ID is the key to the Finnish digital ecosystem</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Why Bank ID matters</h4>
+              <p>Finnish online banking ID (verkkopankkitunnukset) is the standard way to authenticate with government services, sign contracts electronically, and apply for benefits through Kela.</p>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Essential Apps to Download</h4>
+              <ul>
+                <li>Your bank's mobile app</li>
+                <li>Kela — for benefits management</li>
+                <li>HSL — public transport (Helsinki area)</li>
+                <li>Vero — tax authority</li>
+                <li>OmaKanta — health records</li>
+              </ul>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Get a Finnish SIM</h4>
+              <p>Pick up a SIM card from Elisa, DNA or Telia. Prepaid options are available at most supermarkets (K-Market, S-Market, R-Kiosk).</p>
+              <div class="resource-links">
+                <a href="https://elisa.fi" target="_blank" rel="noopener" class="resource-link">Elisa ↗</a>
+                <a href="https://dna.fi" target="_blank" rel="noopener" class="resource-link">DNA ↗</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             4. LANGUAGE LEARNING
+        ──────────────────────────────── -->
+        <section class="hub-section" id="language" data-path="both" aria-labelledby="language-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-language" aria-hidden="true">🗣️</div>
+            <div>
+              <h2 id="language-title">
+                <span data-i18n="lang_title">Language Learning</span>
+                <span class="path-tag moving" aria-label="For both paths">✈️ &amp; 🌲 Both</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_language_desc">Finnish &amp; Swedish courses tailored to your daily life</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Why Learn Finnish?</h4>
+              <p data-i18n="lang_p1">Basic Finnish gives you a huge advantage in the job market and daily life. We offer structured courses for all levels.</p>
+              <p style="margin-top:10px; font-size:0.85rem; color:var(--muted);" data-i18n="lang_levels">Available levels: Beginner · Intermediate · Conversational · Business Finnish</p>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Swedish in Finland</h4>
+              <p>Finland has two official languages: Finnish and Swedish. Swedish speakers make up ~5% of the population. Knowing Swedish opens doors in certain regions and workplaces.</p>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Free Public Resources</h4>
+              <ul>
+                <li>Finnish courses via TE Services</li>
+                <li>Integration courses through municipalities</li>
+                <li>Yle Areena — Finnish TV & radio</li>
+                <li>Supisuomi — beginner Finnish</li>
+              </ul>
+              <div class="resource-links">
+                <a href="https://areena.yle.fi" target="_blank" rel="noopener" class="resource-link">Yle Areena ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box fade-up">
+            💡 Learning basic Finnish phrases early shows respect and opens doors socially. Finns appreciate the effort even when they speak perfect English.
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             5. LOCAL EVENTS
+        ──────────────────────────────── -->
+        <section class="hub-section" id="events" data-path="living" aria-labelledby="events-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-events" aria-hidden="true">🎉</div>
+            <div>
+              <h2 id="events-title">
+                <span data-i18n="events_title">Local Events &amp; Community</span>
+                <span class="path-tag living" aria-label="For those already in Finland">🌲 Living</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_events_desc">Community events, networking and cultural experiences</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Expat Communities</h4>
+              <p data-i18n="events_p1">Connect with expat communities, attend cultural events, and build your network in Finland.</p>
+              <ul>
+                <li>Internations Helsinki</li>
+                <li>Helsinki Expats Facebook groups</li>
+                <li>Meetup.com Helsinki groups</li>
+              </ul>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Finnish Cultural Calendar</h4>
+              <ul>
+                <li>Juhannus (Midsummer) — June</li>
+                <li>Helsinki Day — June 12</li>
+                <li>Flow Festival — August</li>
+                <li>Slush — November (tech)</li>
+                <li>Christmas markets — December</li>
+              </ul>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Finding Events</h4>
+              <ul>
+                <li>MyHelsinki.fi official guide</li>
+                <li>Eventbrite Helsinki</li>
+                <li>Library events (free!)</li>
+                <li>Community centre (asukastalo) events</li>
+              </ul>
+              <div class="resource-links">
+                <a href="https://myhelsinki.fi" target="_blank" rel="noopener" class="resource-link">MyHelsinki ↗</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             6. JOBS & BENEFITS
+        ──────────────────────────────── -->
+        <section class="hub-section" id="jobs" data-path="moving" aria-labelledby="jobs-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-jobs" aria-hidden="true">💼</div>
+            <div>
+              <h2 id="jobs-title">
+                <span data-i18n="jobs_title">Jobs &amp; Benefits</span>
+                <span class="path-tag moving" aria-label="For those moving to Finland">✈️ Moving</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_jobs_desc">TE Services, Kela benefits and job search strategies</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Job Search Portals</h4>
+              <ul>
+                <li>TE Services (te-palvelut.fi) — register immediately</li>
+                <li>LinkedIn — strong in Finland</li>
+                <li>Oikotie Jobs</li>
+                <li>Monster.fi</li>
+                <li>Company career pages directly</li>
+              </ul>
+              <div class="resource-links">
+                <a href="https://te-palvelut.fi" target="_blank" rel="noopener" class="resource-link">TE-palvelut ↗</a>
+              </div>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Kela Benefits</h4>
+              <p data-i18n="jobs_p1">Register at TE Services immediately upon arrival. Apply to Kela for housing benefit and basic unemployment allowance if needed.</p>
+              <ul>
+                <li>Basic unemployment allowance</li>
+                <li>Housing benefit — can cover a large portion of rent</li>
+                <li>General housing allowance</li>
+              </ul>
+              <div class="resource-links">
+                <a href="https://kela.fi" target="_blank" rel="noopener" class="resource-link">Kela.fi ↗</a>
+              </div>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Reality Check</h4>
+              <ul>
+                <li>English-only jobs exist but are limited</li>
+                <li>Basic Finnish = big competitive advantage</li>
+                <li>Networking matters — use LinkedIn actively</li>
+                <li>Internships can lead to full employment</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="warning-box fade-up" data-i18n="jobs_warning">
+            ⚠️ You must actively apply for jobs or benefit payments may stop. Keep records of all applications.
+          </div>
+        </section>
+
+        <!-- ────────────────────────────────
+             7. HEALTHCARE
+        ──────────────────────────────── -->
+        <section class="hub-section" id="healthcare" data-path="both" aria-labelledby="healthcare-title">
+          <div class="hub-section-header">
+            <div class="hub-section-icon icon-healthcare" aria-hidden="true">🏥</div>
+            <div>
+              <h2 id="healthcare-title">
+                <span data-i18n="svc_healthcare_title">Healthcare</span>
+                <span class="path-tag moving">✈️ &amp; 🌲 Both</span>
+              </h2>
+              <p class="subtitle" data-i18n="svc_healthcare_desc">Navigate the Finnish healthcare system confidently</p>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card fade-up">
+              <h4>Public Healthcare Access</h4>
+              <p>Public healthcare is decent but not always fast. Access it through your local health centre (terveyskeskus) after registration. You'll be assigned a health centre based on your home address.</p>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Kela Card</h4>
+              <p>Your Kela card helps reduce healthcare costs. Apply for it once you have your personal identity code and are registered with Kela.</p>
+              <div class="resource-links">
+                <a href="https://kela.fi" target="_blank" rel="noopener" class="resource-link">Get Kela card ↗</a>
+              </div>
+            </div>
+
+            <div class="info-card fade-up">
+              <h4>Emergency & Digital</h4>
+              <ul>
+                <li>Emergency: 112</li>
+                <li>Medical helpline: 116 117</li>
+                <li>OmaKanta app — digital health records</li>
+                <li>Terveystalo, Mehiläinen — private options</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tip-box fade-up">
+            💡 Use the OmaKanta service (kanta.fi) to view your health records, prescriptions and lab results online using your bank ID.
+          </div>
+        </section>
+
+        <!-- Book a call CTA -->
+        <div style="text-align:center; margin-top:20px; padding:52px 24px; background:var(--white); border-radius:var(--radius); border:1px solid var(--border);" class="fade-up">
+          <p style="font-size:0.78rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--teal); margin-bottom:14px;">Ready to get started?</p>
+          <h2 style="font-size:clamp(1.5rem,3vw,2rem); margin-bottom:14px;">Book a free 30-min consultation</h2>
+          <p style="color:var(--muted); max-width:420px; margin:0 auto 28px; font-size:0.95rem;">Let us help you navigate your specific Finland journey with a personalised consultation.</p>
+          <a href="../index.html#booking" style="display:inline-flex; align-items:center; gap:8px; background:var(--forest); color:var(--birch-light); font-weight:700; font-size:0.95rem; padding:14px 32px; border-radius:var(--radius-pill); transition:all 0.25s ease; box-shadow:0 4px 20px rgba(26,58,47,0.2);" onmouseover="this.style.background='var(--teal)'" onmouseout="this.style.background='var(--forest)'">
+            <span data-i18n="nav_book">Book a Call</span> →
+          </a>
+        </div>
+
+      </div><!-- /container -->
+    </div><!-- /hub-content -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-bottom">
+        <p data-i18n="footer_rights">© 2025 MOM Finland. All rights reserved.</p>
+        <div class="lang-switcher" role="group">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="fi">FI</button>
+          <button class="lang-btn" data-lang="sv">SV</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/i18n.js"></script>
+  <script src="../js/hub.js"></script>
+
+  <style>
+    .fade-up { opacity:0; transform:translateY(24px); transition:opacity 0.55s ease,transform 0.55s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+  </style>
+</body>
+</html>
