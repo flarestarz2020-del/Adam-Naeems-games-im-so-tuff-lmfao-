@@ -230,50 +230,49 @@ function initBookingForm() {
   const form = document.getElementById('bookingForm');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = form.querySelector('[name="name"]').value.trim();
     const email = form.querySelector('[name="email"]').value.trim();
     const topic = form.querySelector('[name="topic"]').value;
     const slotDisplay = document.getElementById('selectedSlotDisplay');
-    const date = slotDisplay?.dataset?.date;
-    const time = slotDisplay?.dataset?.time;
+    const date = slotDisplay?.dataset?.date || '';
+    const time = slotDisplay?.dataset?.time || '';
 
     if (!name || !email || !topic) {
       shakeForm(form);
       return;
     }
 
-    if (!date || !time) {
-      const slotMsg = slotDisplay;
-      if (slotMsg) {
-        slotMsg.style.borderColor = 'rgba(220,90,60,0.5)';
-        slotMsg.style.color = '#e07060';
-        slotMsg.textContent = '⚠️ Please select a date and time first';
-        setTimeout(() => {
-          slotMsg.style.borderColor = '';
-          slotMsg.style.color = '';
-          slotMsg.innerHTML = '📅 No date selected yet';
-        }, 2500);
-      }
-      return;
-    }
-
-    // Simulate submission
     const submitBtn = form.querySelector('.btn-book');
     submitBtn.textContent = '⏳ Booking...';
     submitBtn.disabled = true;
 
-    setTimeout(() => {
-      const successMsg = document.getElementById('bookingSuccess');
-      form.style.display = 'none';
-      if (successMsg) {
-        successMsg.style.display = 'block';
-        const lang = localStorage.getItem('momLang') || 'en';
-        successMsg.textContent = window.t ? window.t('booking_success') : '🎉 Booking confirmed! We\'ll email you shortly.';
+    try {
+      const response = await fetch('https://formspree.io/f/xeevwoyn', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, topic, date, time })
+      });
+
+      if (response.ok) {
+        const successMsg = document.getElementById('bookingSuccess');
+        form.style.display = 'none';
+        if (successMsg) {
+          successMsg.style.display = 'block';
+          successMsg.textContent = window.t ? window.t('booking_success') : '🎉 Booking confirmed! We\'ll email you shortly.';
+        }
+      } else {
+        throw new Error('Formspree error');
       }
-    }, 1200);
+    } catch (err) {
+      submitBtn.textContent = '❌ Something went wrong. Try again.';
+      submitBtn.disabled = false;
+      setTimeout(() => {
+        submitBtn.textContent = window.t ? window.t('booking_submit') : 'Confirm Booking';
+      }, 3000);
+    }
   });
 }
 
