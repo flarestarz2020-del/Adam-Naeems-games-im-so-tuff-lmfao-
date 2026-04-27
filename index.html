@@ -262,6 +262,11 @@
               📅 No date selected yet
             </div>
 
+            <div data-fs-success class="booking-success-msg" role="status" aria-live="polite">
+              🎉 Booking confirmed! We'll email you shortly.
+            </div>
+            <div data-fs-error class="fs-form-error"></div>
+
             <form id="bookingForm" action="https://formspree.io/f/xeevwoyn" method="POST" novalidate>
               <div class="form-group">
                 <label for="bookName" data-i18n="booking_name">Full Name</label>
@@ -272,8 +277,10 @@
                   data-i18n-ph="booking_name"
                   placeholder="Full Name"
                   autocomplete="name"
+                  data-fs-field
                   required
                 />
+                <span data-fs-error="name" class="fs-field-error"></span>
               </div>
 
               <div class="form-group">
@@ -285,13 +292,15 @@
                   data-i18n-ph="booking_email"
                   placeholder="Email Address"
                   autocomplete="email"
+                  data-fs-field
                   required
                 />
+                <span data-fs-error="email" class="fs-field-error"></span>
               </div>
 
               <div class="form-group">
                 <label for="bookTopic" data-i18n="booking_topic">Topic</label>
-                <select id="bookTopic" name="topic" required>
+                <select id="bookTopic" name="topic" data-fs-field required>
                   <option value="" data-i18n="booking_topic_placeholder">Select a topic</option>
                   <option value="housing" data-i18n="booking_topic_housing">Housing &amp; Accommodation</option>
                   <option value="registration" data-i18n="booking_topic_registration">Registration &amp; Legal</option>
@@ -300,14 +309,15 @@
                   <option value="events" data-i18n="booking_topic_events">Local Events</option>
                   <option value="other" data-i18n="booking_topic_other">Other / General Advice</option>
                 </select>
+                <span data-fs-error="topic" class="fs-field-error"></span>
               </div>
 
-              <button type="submit" class="btn-book" data-i18n="booking_submit">Confirm Booking</button>
-            </form>
+              <!-- Hidden fields for calendar slot -->
+              <input type="hidden" name="date" id="fsDate" />
+              <input type="hidden" name="time" id="fsTime" />
 
-            <div class="booking-success-msg" id="bookingSuccess" role="status" aria-live="polite">
-              🎉 Booking confirmed! We'll email you shortly.
-            </div>
+              <button type="submit" class="btn-book" data-fs-submit-btn data-i18n="booking_submit">Confirm Booking</button>
+            </form>
 
             <p style="margin-top:16px; font-size:0.78rem; color:rgba(255,255,255,0.4); text-align:center;">
               📬 Booking recommendation: Integrate <strong style="color:rgba(255,255,255,0.6)">Calendly</strong> or <strong style="color:rgba(255,255,255,0.6)">TidyCal</strong> for production
@@ -376,6 +386,11 @@
   <!-- Scripts -->
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#bookingForm', formId: 'xeevwoyn' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
   <style>
     @keyframes shake {

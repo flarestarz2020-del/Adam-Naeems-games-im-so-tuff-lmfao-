@@ -224,61 +224,23 @@ function initCalendar() {
 }
 
 // ============================================================
-//  Booking Form
+//  Booking Form — slot sync only (submission handled by @formspree/ajax)
 // ============================================================
 function initBookingForm() {
-  const form = document.getElementById('bookingForm');
-  if (!form) return;
+  // Sync calendar slot into hidden fields so Formspree receives them
+  const slotDisplay = document.getElementById('selectedSlotDisplay');
+  const fsDate = document.getElementById('fsDate');
+  const fsTime = document.getElementById('fsTime');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  if (!slotDisplay || !fsDate || !fsTime) return;
 
-    const name = form.querySelector('[name="name"]').value.trim();
-    const email = form.querySelector('[name="email"]').value.trim();
-    const topic = form.querySelector('[name="topic"]').value;
-    const slotDisplay = document.getElementById('selectedSlotDisplay');
-    const date = slotDisplay?.dataset?.date || '';
-    const time = slotDisplay?.dataset?.time || '';
+  const syncSlot = () => {
+    fsDate.value = slotDisplay.dataset.date || '';
+    fsTime.value = slotDisplay.dataset.time || '';
+  };
 
-    if (!name || !email || !topic) {
-      shakeForm(form);
-      return;
-    }
-
-    const submitBtn = form.querySelector('.btn-book');
-    submitBtn.textContent = '⏳ Booking...';
-    submitBtn.disabled = true;
-
-    try {
-      const response = await fetch('https://formspree.io/f/xeevwoyn', {
-        method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, topic, date, time })
-      });
-
-      if (response.ok) {
-        const successMsg = document.getElementById('bookingSuccess');
-        form.style.display = 'none';
-        if (successMsg) {
-          successMsg.style.display = 'block';
-          successMsg.textContent = window.t ? window.t('booking_success') : '🎉 Booking confirmed! We\'ll email you shortly.';
-        }
-      } else {
-        throw new Error('Formspree error');
-      }
-    } catch (err) {
-      submitBtn.textContent = '❌ Something went wrong. Try again.';
-      submitBtn.disabled = false;
-      setTimeout(() => {
-        submitBtn.textContent = window.t ? window.t('booking_submit') : 'Confirm Booking';
-      }, 3000);
-    }
-  });
-}
-
-function shakeForm(form) {
-  form.style.animation = 'shake 0.4s ease';
-  setTimeout(() => form.style.animation = '', 400);
+  // Observe slot display changes
+  new MutationObserver(syncSlot).observe(slotDisplay, { childList: true, subtree: true, attributes: true });
 }
 
 // Expose t() globally for inline use

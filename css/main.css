@@ -779,6 +779,14 @@ p { color: var(--ink-mid); font-size: 1rem; }
   box-shadow: 0 8px 24px rgba(200,169,110,0.35);
 }
 
+.fs-field-error, .fs-form-error {
+  display: block;
+  color: #e07060;
+  font-size: 0.78rem;
+  margin-top: 4px;
+}
+.fs-form-error { margin-bottom: 12px; }
+
 .booking-success-msg {
   display: none;
   text-align: center;
